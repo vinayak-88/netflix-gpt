@@ -1,12 +1,64 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Header } from "./Header";
 import { Login_BG } from "../utils/constants";
+import { checkValidData } from "../utils/Validate";
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utils/firebase";
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const toggleSignInForm = () => {
     setIsSignIn(!isSignIn);
   };
+
+const email=useRef(null)
+const password=useRef(null)
+const [errorMessage,setErrorMessage]=useState(null)
+
+const handleButtonClick=()=>{
+  //Validate form data
+  const message=checkValidData(email.current.value,password.current.value)
+  setErrorMessage(message)
+
+  if(message) return;
+
+  if(!isSignIn){
+    //Sign up logic
+    createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode + "- " + errorMessage)
+    // ..
+  });
+  }
+  else{
+    //Sign In logic
+
+    signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage("User not found")
+
+  });
+  }
+  if(message===null){
+    //create  a new user 
+  }
+}
 
   return (
     <div
@@ -22,7 +74,8 @@ const Login = () => {
       {/*Login Form div*/}
       <div className="w-[30%] bg-black bg-opacity-80 z-10">
         {/* Login form*/}
-        <form className="m-16 px-4">
+        <form className="m-16 px-4 peer:"
+        onSubmit={(e)=>e.preventDefault()}>
           <h2 className="text-3xl font-bold text-white my-6">{isSignIn?"Sign In" : "Sign Up"}</h2>
 
           {!isSignIn && <input
@@ -33,23 +86,26 @@ const Login = () => {
             className="bg-transparent border border-gray-600 text-gray-800 h-14 w-full rounded p-4 mb-4"
           />}
           <input
+          ref={email}
             type="text"
             placeholder="Email Address"
             id="email"
             name="email"
-            className="bg-transparent border border-gray-600 text-gray-800 h-14 w-full rounded p-4 mb-4"
+            className="bg-transparent border border-gray-600 text-gray-800 h-14 w-full rounded p-4 mb-4 hover:bg-gray-100 "
           />
           <input
+          ref={password}
             type="password"
             placeholder="Password"
             id="password"
             name="password"
-            className="bg-transparent border border-gray-600 text-gray-800 h-14 w-full rounded p-4 mb-4"
+            className="bg-transparent border border-gray-600 text-gray-800 h-14 w-full rounded p-4 mb-4 hover:bg-gray-100"
           />
+          {errorMessage && <p className="text-red-600 shadow-md mb-4 font-semibold">{errorMessage}</p>}
           <button
             type="submit"
             className="text-white h-10 font-semibold bg-red-600 w-full rounded"
-          >
+           onClick={handleButtonClick}>
             {isSignIn?"Sign In" : "Sign Up"}
           </button>
           <p className="text-gray-100 text-lg text-center my-4">OR</p>
