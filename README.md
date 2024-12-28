@@ -14,6 +14,7 @@
  -Created Redux Store with userSlice
  -Implemented Sign In and Sign Out
  -Updated User's Profile
+ -Login and Browse Bug Fixed
 
 
 #Features
