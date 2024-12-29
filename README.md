@@ -15,6 +15,8 @@
  -Implemented Sign In and Sign Out
  -Updated User's Profile
  -Login and Browse Bug Fixed
+ -tmdb api set up
+ -movie store set up
 
 
 #Features
