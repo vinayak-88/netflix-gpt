@@ -8,12 +8,12 @@ const MainContainer = () => {
   const mainMovie = movies[0];
   // console.log(mainMovie);
 
-  const {original_title, overview, title,id} = mainMovie;
+  const {original_title, overview,id} = mainMovie;
 
   return (
-  <div>
+  <div className="relative w-full h-screen">
     <VideoTitle title={original_title} overview={overview}/>
-    <VideoBackground movieid={id}/>
+    <VideoBackground movieId={id}/>
   </div>
 );
 };

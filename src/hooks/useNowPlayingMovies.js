@@ -4,7 +4,7 @@ import { addNowPlayingMovies } from "../utils/moviesSlice";
 import { useEffect } from "react";
 
 const useNowPlayingMovies = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const getNowPlayingMovies = async () => {
     const data = await fetch(
@@ -19,6 +19,6 @@ const useNowPlayingMovies = () => {
   useEffect(() => {
     getNowPlayingMovies();
   }, []);
-}
+};
 
 export default useNowPlayingMovies;
