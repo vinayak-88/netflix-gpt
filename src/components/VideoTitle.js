@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlay,faCircleInfo} from '@fortawesome/free-solid-svg-icons';
 const VideoTitle=({title,overview})=>{
     return(
-        <div className='text-white absolute z-10 py-40 px-24 w-full h-full bg-gradient-to-r from-black/60 to-transparent'>
+        <div className='text-white absolute z-10 py-36 px-24 w-full h-full bg-gradient-to-r from-black/60 to-transparent'>
             <h1 className='text-6xl font-bold w-5/12'>{title}</h1>
             <p className='w-1/4 mt-3'>{overview}</p>
             <div>
